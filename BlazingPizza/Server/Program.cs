@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using BlazingPizza.Server.Models;
 
 namespace BlazingPizza.Server
 {
@@ -13,7 +15,16 @@ namespace BlazingPizza.Server
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            IHost host = CreateHostBuilder(args).Build();
+
+            IServiceScopeFactory scopeFactory = host.Services.GetRequiredService<IServiceScopeFactory>();
+            using (IServiceScope scope = scopeFactory.CreateScope())
+            {
+                PizzaStoreContext context = scope.ServiceProvider.GetRequiredService<PizzaStoreContext>();
+                if (!context.Specials.Any()) SeedData.Initialize(context);
+            }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
