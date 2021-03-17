@@ -1,4 +1,28 @@
 ﻿@page "/"
 
-<h1>Blazing Pizzas</h1>
+<div class="main">
+    <ul class="pizza-cards">
+@if (Specials is not null)
+{
+    foreach (PizzaSpecial item in Specials)
+    {
+        <li style="background-image: url('@item.ImageUrl')">
+            <div class="pizza-info">
+                <span class="title">@item.Name</span>
+                @item.Description
+                <span class="price">
+                    @item.GetFormattedBasePrice()
+                </span>
+            </div>
+        </li>
+    }
+}
+else
+{
+        <li>
+            <div class="loading-bar"></div>
+        </li>
+}
+    </ul>
+</div>
 

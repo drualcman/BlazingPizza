@@ -1,6 +1,6 @@
 ﻿@import url('font/quicksand.css');
 
-html, body {
+html, body, #app {
     height: 100%;
 }
 
@@ -17,3 +17,11 @@ body{
     z-index: 1;
     background-color: whitesmoke;
 }
+.main {
+    flex-grow: 1;
+    overflow-y: auto;
+    background: linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,0.4) 80%);
+    padding: 1.5rem !important;
+    height: 100%;
+}
+
