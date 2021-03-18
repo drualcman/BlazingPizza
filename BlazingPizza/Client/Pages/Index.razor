@@ -6,7 +6,8 @@
 {
     foreach (PizzaSpecial item in Specials)
     {
-        <li style="background-image: url('@item.ImageUrl')">
+        <li @onclick="@(()=>Console.WriteLine(item.Name))"
+            style="background-image: url('@item.ImageUrl')">
             <div class="pizza-info">
                 <span class="title">@item.Name</span>
                 @item.Description
