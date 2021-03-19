@@ -17,5 +17,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\Pizzas\" />
   </ItemGroup>
+  
+  <PropertyGroup>
+    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+  </PropertyGroup>
+
 
 </Project>

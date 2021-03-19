@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace BlazingPizza.Client
             //set the base url to use in the HttpClient calls, Ex. https://apu.mydomain.com
             //default use the same url from wehere we are running if the App is hosted in the same web/api
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            //force to use the culture from the country about the app.
+            CultureInfo.CurrentCulture = new CultureInfo("en-AU");
+
 
             await builder.Build().RunAsync();
         }
