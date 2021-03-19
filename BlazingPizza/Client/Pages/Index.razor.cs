@@ -9,16 +9,30 @@ using System.Net.Http.Json;
 
 namespace BlazingPizza.Client.Pages
 {
-    public partial class Index : ComponentBase
+    public partial class Index 
     {
         [Inject]
         public HttpClient Client { get; set; }
 
         List<PizzaSpecial> Specials;
+        bool ShowingConfigureDialog;
+        Pizza ConfiguringPizza;
 
         protected override async Task OnInitializedAsync()
         {
             Specials = await Client.GetFromJsonAsync<List<PizzaSpecial>>("specials");
+        }
+
+        void ShowConfigurePizzaDialog(PizzaSpecial special)
+        {
+            ConfiguringPizza = new Pizza()
+            {
+                Special = special,
+                SpecialId = special.Id,
+                Size = Pizza.DefaultSize,
+                Toppings = new List<PizzaTopping>()
+            };
+            ShowingConfigureDialog = true;
         }
     }
 }

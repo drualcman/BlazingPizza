@@ -1,0 +1,18 @@
+﻿<div class="dialog-container">
+    <div class="dialog">
+        <div class="dialog-title">
+            <h2>@Pizza.Special.Name</h2>
+            @Pizza.Special.Description
+        </div>
+        <form class="dialog-body">
+
+        </form>
+        <div class="dialog-buttons">
+            <button class="btn btn-secondary mr-auto">Cancel</button>
+            <span class="mr-center">
+                Price: <span class="price">@Pizza.GetTotalPrice()</span>
+            </span>
+            <button class="btn btn-success ml-auto">Order ></button>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inject NavigationManager Navigation
 
 <div class="main">
     @if (Specials is not null)
@@ -7,7 +6,7 @@
         <ul class="pizza-cards">
             @foreach (PizzaSpecial item in Specials)
             {
-                <li @onclick="@(()=>Console.WriteLine(item.Name))"
+                <li @onclick="@(()=>ShowConfigurePizzaDialog(item))"
                     style="background-image: url('@item.ImageUrl')">
                     <div class="pizza-info">
                         <span class="title">@item.Name</span>
@@ -26,3 +25,7 @@
     }
 </div>
 
+@if (ShowingConfigureDialog)
+{
+    <ConfigurePizzaDialog Pizza="ConfiguringPizza"/>
+}
