@@ -16,7 +16,8 @@ namespace BlazingPizza.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
+            //set the base url to use in the HttpClient calls, Ex. https://apu.mydomain.com
+            //default use the same url from wehere we are running if the App is hosted in the same web/api
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();

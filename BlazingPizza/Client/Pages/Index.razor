@@ -1,29 +1,28 @@
 ﻿@page "/"
+@inject NavigationManager Navigation
 
 <div class="main">
-    <ul class="pizza-cards">
-@if (Specials is not null)
-{
-    foreach (PizzaSpecial item in Specials)
+    @if (Specials is not null)
     {
-        <li @onclick="@(()=>Console.WriteLine(item.Name))"
-            style="background-image: url('@item.ImageUrl')">
-            <div class="pizza-info">
-                <span class="title">@item.Name</span>
-                @item.Description
-                <span class="price">
-                    @item.GetFormattedBasePrice()
-                </span>
-            </div>
-        </li>
+        <ul class="pizza-cards">
+            @foreach (PizzaSpecial item in Specials)
+            {
+                <li @onclick="@(()=>Console.WriteLine(item.Name))"
+                    style="background-image: url('@item.ImageUrl')">
+                    <div class="pizza-info">
+                        <span class="title">@item.Name</span>
+                        @item.Description
+                        <span class="price">
+                            @item.GetFormattedBasePrice()
+                        </span>
+                    </div>
+                </li>
+            }
+        </ul>
     }
-}
-else
-{
-        <li>
-            <div class="loading-bar"></div>
-        </li>
-}
-    </ul>
+    else
+    {
+        <div class="loading-bar"></div>
+    }
 </div>
 
