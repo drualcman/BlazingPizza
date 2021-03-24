@@ -12,6 +12,7 @@ namespace BlazingPizza.Server.Models
         public DbSet<PizzaSpecial> Specials { get; set; }
         public DbSet<Topping> Toppings { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public PizzaStoreContext(DbContextOptions options) : base(options) { }
 
@@ -20,6 +21,8 @@ namespace BlazingPizza.Server.Models
             modelBuilder.Entity<PizzaTopping>().HasKey(pt => new { pt.ToppingId, pt.PizzaId });
             modelBuilder.Entity<PizzaTopping>().HasOne<Pizza>().WithMany(pt => pt.Toppings);
             modelBuilder.Entity<PizzaTopping>().HasOne(pt => pt.Topping).WithMany();
+
+            modelBuilder.Entity<Order>().OwnsOne(o => o.DeliveryLocation);
         }
     }
 }
