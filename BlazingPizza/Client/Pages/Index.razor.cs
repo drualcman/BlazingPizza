@@ -17,9 +17,11 @@ namespace BlazingPizza.Client.Pages
         List<PizzaSpecial> Specials;
         bool ShowingConfigureDialog;
         Pizza ConfiguringPizza;
+        Order MyOrder;
 
         protected override async Task OnInitializedAsync()
         {
+            MyOrder = new Order();          //for performance can be here
             Specials = await Client.GetFromJsonAsync<List<PizzaSpecial>>("specials");
         }
 
@@ -43,6 +45,8 @@ namespace BlazingPizza.Client.Pages
 
         void OnConfirm_Click()
         {
+            MyOrder.Pizzas.Add(ConfiguringPizza);
+            ConfiguringPizza = null;
             ShowingConfigureDialog = false;
         }
     }
