@@ -34,5 +34,16 @@ namespace BlazingPizza.Client.Pages
             };
             ShowingConfigureDialog = true;
         }
+
+        void OnCancel_Click()
+        {
+            ConfiguringPizza = null;
+            ShowingConfigureDialog = false;
+        }
+
+        void OnConfirm_Click()
+        {
+            ShowingConfigureDialog = false;
+        }
     }
 }
