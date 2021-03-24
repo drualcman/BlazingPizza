@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace BlazingPizza.Client.Shared
@@ -11,5 +13,43 @@ namespace BlazingPizza.Client.Shared
     {
         [Parameter]
         public Pizza Pizza { get; set; }
+
+        [Parameter]
+        public EventCallback OnCancel { get; set; }
+
+        [Parameter]
+        public EventCallback OnConfirm { get; set; }
+
+        [Inject]
+        public HttpClient Client { get; set; }
+
+        List<Topping> Toppings;
+
+        protected override async Task OnInitializedAsync()
+        {
+            Toppings = await Client.GetFromJsonAsync<List<Topping>>("toppings");
+        }
+
+        void AddTopping(Topping topping)
+        {
+            if (Pizza.Toppings.Find(pt => pt.Topping == topping) is null)
+            {
+                Pizza.Toppings.Add(new PizzaTopping
+                {
+                    Topping = topping
+                });
+            }
+        }
+
+        void ToppingSelected(ChangeEventArgs e)
+        {
+            if (int.TryParse(e.Value.ToString(), out int index) && index >= 0)
+                AddTopping(Toppings[index]);
+        }
+
+        void RemoveTopping(Topping topping)
+        {
+            Pizza.Toppings.RemoveAll(pt => pt.Topping == topping);
+        }
     }
 }
