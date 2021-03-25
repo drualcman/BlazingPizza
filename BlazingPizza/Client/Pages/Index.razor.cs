@@ -49,5 +49,16 @@ namespace BlazingPizza.Client.Pages
             ConfiguringPizza = null;
             ShowingConfigureDialog = false;
         }
+
+        void OnRemoved_Click(Pizza pizza)
+        {
+            MyOrder.Pizzas.Remove(pizza);
+        }
+
+        async Task PlaceOrder()
+        {
+            await Client.PostAsJsonAsync("orders", MyOrder);
+            MyOrder = new Order();
+        }
     }
 }

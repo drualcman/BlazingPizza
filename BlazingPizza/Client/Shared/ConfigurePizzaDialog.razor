@@ -1,8 +1,8 @@
 ﻿<div class="dialog-container">
     <div class="dialog">
         <div class="dialog-title">
-            <h2>@Pizza.Special.Name</h2>
-            @Pizza.Special.Description
+            <h2>@MyPizza.Special.Name</h2>
+            @MyPizza.Special.Description
         </div>
         <form class="dialog-body">
             <div>
@@ -11,19 +11,19 @@
                        min="@Pizza.MinimumSize"
                        max="@Pizza.MaximumSize"
                        step="@Pizza.IncrementSize"
-                       @bind="Pizza.Size"
+                       @bind="MyPizza.Size"
                        @bind:event="oninput"
                 />
-                <span class="size-label">@Pizza.Size cm</span>
+                <span class="size-label">@MyPizza.Size cm ($ @MyPizza.GetFormattedBasePrice())</span>
             </div>
             <div>
                 <label>Select your topping:</label>
                 @if(Toppings is null)
             {
                 <div class="loading-bar"></div>
-            }
-                else if (Pizza.Toppings.Count >= 6)
-            {
+                }
+                else if (MyPizza.Toppings.Count >= 6)
+                {
                     <p>(Max toppings)</p>
             }
                 else
@@ -38,7 +38,7 @@
             }
             </div>
             <div class="toppings">
-                @foreach (PizzaTopping item in Pizza.Toppings)
+                @foreach (PizzaTopping item in MyPizza.Toppings)
                 {
                     <div class="topping">
                         @item.Topping.Name
@@ -55,7 +55,7 @@
         <div class="dialog-buttons">
             <button class="btn btn-secondary mr-auto" @onclick="OnCancel">Cancel</button>
             <span class="mr-center">
-                Price: <span class="price">@Pizza.GetFormattedBasePrice()</span>
+                Price: <span class="price">@MyPizza.GetFormattedTotalPrice()</span>
             </span>
             <button class="btn btn-success ml-auto" @onclick="OnConfirm">Order ></button>
         </div>

@@ -21,7 +21,8 @@ namespace BlazingPizza.Shared
         public List<PizzaTopping> Toppings { get; set; }
         public decimal GetBasePrice() => ((decimal)Size / (decimal)DefaultSize) * Special.BasePrice;
         public decimal GetTotalPrice() => GetBasePrice() + Toppings.Sum(t => t.Topping.Price);
-        public string GetFormattedBasePrice() => GetTotalPrice().ToString("0.00");
+        public string GetFormattedBasePrice() => GetBasePrice().ToString("0.00");
+        public string GetFormattedTotalPrice() => GetTotalPrice().ToString("0.00");
 
     }
 }

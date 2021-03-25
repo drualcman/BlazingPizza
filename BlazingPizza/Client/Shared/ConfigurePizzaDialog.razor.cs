@@ -12,7 +12,7 @@ namespace BlazingPizza.Client.Shared
     public partial class ConfigurePizzaDialog
     {
         [Parameter]
-        public Pizza Pizza { get; set; }
+        public Pizza MyPizza { get; set; }
 
         [Parameter]
         public EventCallback OnCancel { get; set; }
@@ -32,9 +32,9 @@ namespace BlazingPizza.Client.Shared
 
         void AddTopping(Topping topping)
         {
-            if (Pizza.Toppings.Find(pt => pt.Topping == topping) is null)
+            if (MyPizza.Toppings.Find(pt => pt.Topping == topping) is null)
             {
-                Pizza.Toppings.Add(new PizzaTopping
+                MyPizza.Toppings.Add(new PizzaTopping
                 {
                     Topping = topping
                 });
@@ -49,7 +49,7 @@ namespace BlazingPizza.Client.Shared
 
         void RemoveTopping(Topping topping)
         {
-            Pizza.Toppings.RemoveAll(pt => pt.Topping == topping);
+            MyPizza.Toppings.RemoveAll(pt => pt.Topping == topping);
         }
     }
 }
