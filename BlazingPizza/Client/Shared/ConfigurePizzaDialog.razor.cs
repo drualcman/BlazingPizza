@@ -51,5 +51,17 @@ namespace BlazingPizza.Client.Shared
         {
             MyPizza.Toppings.RemoveAll(pt => pt.Topping == topping);
         }
+
+        bool ContainsTopping(Topping topping)
+        {
+            bool result = false;
+
+            foreach (PizzaTopping item in MyPizza.Toppings)
+            {
+                if (item.Topping == topping) result = true;
+                else continue;
+            }
+            return result;
+        }
     }
 }

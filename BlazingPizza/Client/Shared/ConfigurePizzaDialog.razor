@@ -32,7 +32,7 @@
                     <option value="-1" disabled selected>(Select)</option>
                     @for (int i = 0; i < Toppings.Count; i++)
                     {
-                        <option value="@i">@Toppings[i].Name ($ @Toppings[i].GetFormattedBasePrice())</option>
+                        <option value="@i" style="@(ContainsTopping(Toppings[i]) ? "display:none":"")">@Toppings[i].Name ($ @Toppings[i].GetFormattedBasePrice())</option>
                     }
                 </select>
             }
