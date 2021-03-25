@@ -24,7 +24,7 @@ namespace BlazingPizza.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Topping>>> GetToppings()
         {
-            return await this.Context.Toppings.OrderByDescending(t => t.Name).ToListAsync();
+            return await this.Context.Toppings.OrderBy(t => t.Name).ToListAsync();
         }
     }
 }

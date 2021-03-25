@@ -54,14 +54,7 @@ namespace BlazingPizza.Client.Shared
 
         bool ContainsTopping(Topping topping)
         {
-            bool result = false;
-
-            foreach (PizzaTopping item in MyPizza.Toppings)
-            {
-                if (item.Topping == topping) result = true;
-                else continue;
-            }
-            return result;
+            return MyPizza.Toppings.Find(t=> t.Topping == topping) != null; 
         }
     }
 }
