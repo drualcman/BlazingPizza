@@ -1,14 +1,17 @@
 ﻿@import url('font/quicksand.css');
 
-html, body, #app {
+html, body {
     height: 100%;
 }
 
 body{
     padding-top:5rem;
-    flex-direction:column;
     font-family: Quicksand;
     overflow-y: hidden;
+}
+
+#app {
+    display: inline;
 }
 
 .content{

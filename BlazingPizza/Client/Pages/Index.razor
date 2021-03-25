@@ -36,21 +36,21 @@
             }
         </div>
     }
-            else
-            {
+    else
+    {
         <div class="empty-cart">
-            Select a pizza<br/> to start your order.
+            Select a pizza<br /> to start your order.
         </div>
-            }
-<div class="order-total @(MyOrder.Pizzas.Any() ? "":"hidden")">
-    Total:
-    <span class="total-price">@MyOrder.GetFormattedTotalPrice()</span>
-    <br />
-    <button type="button" class="btn btn-warning" @onclick="PlaceOrder">Order ></button>
-</div>
+    }
+    <div class="order-total @(MyOrder.Pizzas.Any() ? "":"hidden")">
+        Total:
+        <span class="total-price">@MyOrder.GetFormattedTotalPrice()</span>
+        <br />
+        <button type="button" class="btn btn-warning" @onclick="PlaceOrder">Order ></button>
+    </div>
 </div>
 
 @if (ShowingConfigureDialog)
 {
-    <ConfigurePizzaDialog MyPizza="ConfiguringPizza" OnCancel="OnCancel_Click" OnConfirm="OnConfirm_Click"/>
+    <ConfigurePizzaDialog MyPizza="ConfiguringPizza" OnCancel="OnCancel_Click" OnConfirm="OnConfirm_Click" />
 }
