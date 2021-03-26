@@ -30,15 +30,12 @@
                     <select class="custom-select"
                             @bind="SelectedValue">
                         <option value="-1" disabled>(Select)</option>
-                        @for (int i = 0; i < Toppings.Count; i++)
-                        {
-                            @if (ContainsTopping(Toppings[i]))
-                            {
-                                <option value="@i">
-                                    @Toppings[i].Name ($ @Toppings[i].GetFormattedBasePrice())
-                                </option>
-                            }
-                        }
+                        @foreach (Topping item in Toppings)
+                        {                          
+                            <option value="@item.Id">
+                                @item.Name ($ @item.GetFormattedBasePrice())
+                            </option>                          
+                        }                        
                     </select>
                 }
             </div>

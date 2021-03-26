@@ -26,15 +26,10 @@ namespace BlazingPizza.Client.Shared
         List<Topping> Toppings;
 
         private int SelectedIndex = -1;
-
         public int SelectedValue
         {
             get => SelectedIndex;
-            set
-            {
-                SelectedIndex = value;
-                ToppingSelected();
-            }
+            set => AddTopping(value);
         }
 
         protected override async Task OnInitializedAsync()
@@ -42,34 +37,18 @@ namespace BlazingPizza.Client.Shared
             Toppings = await Client.GetFromJsonAsync<List<Topping>>("toppings");
         }
 
-        void AddTopping(Topping topping)
+        void AddTopping(int id)
         {
-            if (MyPizza.Toppings.Find(pt => pt.Topping == topping) is null)
-            {
-                MyPizza.Toppings.Add(new PizzaTopping
-                {
-                    Topping = topping
-                });
-            }
-        }
-
-        void ToppingSelected()
-        {
-            if (SelectedValue >= 0)
-            {
-                AddTopping(Toppings[SelectedValue]);
-                SelectedValue = -1;
-            }
+            Topping topping = Toppings.Where(t => t.Id == id).First();            
+            MyPizza.Toppings.Add(new PizzaTopping { Topping = topping });
+            Toppings.Remove(topping);
         }
 
         void RemoveTopping(Topping topping)
         {
             MyPizza.Toppings.RemoveAll(pt => pt.Topping == topping);
-        }
-
-        bool ContainsTopping(Topping topping)
-        {
-            return MyPizza.Toppings.Find(t=> t.Topping == topping) == null; 
+            Toppings.Add(topping);
+            Toppings.Sort((a, b) => a.Name.CompareTo(b.Name));
         }
     }
 }
