@@ -7,35 +7,40 @@
         <form class="dialog-body">
             <div>
                 <label>Size:</label>
-                <input type="range" 
+                <input type="range"
                        min="@Pizza.MinimumSize"
                        max="@Pizza.MaximumSize"
                        step="@Pizza.IncrementSize"
                        @bind="MyPizza.Size"
-                       @bind:event="oninput"
-                />
+                       @bind:event="oninput" />
                 <span class="size-label">@MyPizza.Size cm ($ @MyPizza.GetFormattedBasePrice())</span>
             </div>
             <div>
                 <label>Select your topping:</label>
-                @if(Toppings is null)
-            {
-                <div class="loading-bar"></div>
+                @if (Toppings is null)
+                {
+                    <div class="loading-bar"></div>
                 }
                 else if (MyPizza.Toppings.Count >= 6)
                 {
                     <p>(Max toppings)</p>
-            }
+                }
                 else
-            {
-                <select class="custom-select" @onchange="ToppingSelected" >
-                    <option value="-1" disabled selected>(Select)</option>
-                    @for (int i = 0; i < Toppings.Count; i++)
-                    {
-                        <option value="@i" style="@(ContainsTopping(Toppings[i]) ? "display:none":"")">@Toppings[i].Name ($ @Toppings[i].GetFormattedBasePrice())</option>
-                    }
-                </select>
-            }
+                {
+                    <select class="custom-select"
+                            @bind="SelectedValue">
+                        <option value="-1" disabled>(Select)</option>
+                        @for (int i = 0; i < Toppings.Count; i++)
+                        {
+                            @if (ContainsTopping(Toppings[i]))
+                            {
+                                <option value="@i">
+                                    @Toppings[i].Name ($ @Toppings[i].GetFormattedBasePrice())
+                                </option>
+                            }
+                        }
+                    </select>
+                }
             </div>
             <div class="toppings">
                 @foreach (PizzaTopping item in MyPizza.Toppings)

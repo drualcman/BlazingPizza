@@ -25,6 +25,18 @@ namespace BlazingPizza.Client.Shared
 
         List<Topping> Toppings;
 
+        private int SelectedIndex = -1;
+
+        public int SelectedValue
+        {
+            get => SelectedIndex;
+            set
+            {
+                SelectedIndex = value;
+                ToppingSelected();
+            }
+        }
+
         protected override async Task OnInitializedAsync()
         {
             Toppings = await Client.GetFromJsonAsync<List<Topping>>("toppings");
@@ -41,10 +53,13 @@ namespace BlazingPizza.Client.Shared
             }
         }
 
-        void ToppingSelected(ChangeEventArgs e)
+        void ToppingSelected()
         {
-            if (int.TryParse(e.Value.ToString(), out int index) && index >= 0)
-                AddTopping(Toppings[index]);
+            if (SelectedValue >= 0)
+            {
+                AddTopping(Toppings[SelectedValue]);
+                SelectedValue = -1;
+            }
         }
 
         void RemoveTopping(Topping topping)
@@ -54,7 +69,7 @@ namespace BlazingPizza.Client.Shared
 
         bool ContainsTopping(Topping topping)
         {
-            return MyPizza.Toppings.Find(t=> t.Topping == topping) != null; 
+            return MyPizza.Toppings.Find(t=> t.Topping == topping) == null; 
         }
     }
 }
