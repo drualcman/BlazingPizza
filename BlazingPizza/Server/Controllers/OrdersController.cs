@@ -44,9 +44,16 @@ namespace BlazingPizza.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Order>>> GetOrders()
+        public async Task<ActionResult<List<OrderWithStatus>>> GetOrders()
         {
-            return await this.Context.Orders.OrderByDescending(s => s.OrderId).ToListAsync();
+            List<Order> orders = await this.Context.Orders
+                .Include(o => o.DeliveryLocation)
+                .Include(o=> o.Pizzas).ThenInclude(p=>p.Special)
+                .Include(o=> o.Pizzas).ThenInclude(p=> p.Toppings)
+                                       .ThenInclude(t=> t.Topping)                
+                .OrderByDescending(o => o.CreatedTime)
+                .ToListAsync();
+            return orders.Select(o => OrderWithStatus.FromOrder(o)).ToList();
         }
     }
 }
