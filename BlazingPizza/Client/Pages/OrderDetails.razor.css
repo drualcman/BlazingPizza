@@ -31,3 +31,10 @@
         flex-grow: 1;
         display: flex;
     }
+
+    .track-order .track-order-details{
+        overflow-y: auto;
+        padding: 1.5rem 3rem;
+        flex-grow: 1;
+    }
+

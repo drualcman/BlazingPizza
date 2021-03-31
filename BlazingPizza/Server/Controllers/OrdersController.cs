@@ -56,7 +56,7 @@ namespace BlazingPizza.Server.Controllers
             return orders.Select(o => OrderWithStatus.FromOrder(o)).ToList();
         }
 
-        [HttpGet("{orderId}")]
+        [HttpGet("{orderid}")]
         public async Task<IActionResult> GetOrderWithStatus(int orderId)
         {
             IActionResult result;
