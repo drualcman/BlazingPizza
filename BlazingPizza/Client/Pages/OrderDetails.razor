@@ -1,0 +1,28 @@
+﻿@page "/myorders/{orderId:int}"
+
+<div class="main">
+    @if (InvalidOrder)
+    {
+        <h2>Oops!</h2>
+        <p>Order #@OrderId doesn't exists</p>
+    }
+    else if (MyOrder is null)
+    {
+        <div class="loading-bar"></div>
+    }
+    else
+    {
+        <div class="track-order">
+            <div class="track-order-title">
+                <h2>Your order</h2>
+                @MyOrder.MyOrder.CreatedTime.ToLongDateString()
+                <p class="ml-auto mb-0">
+                    Status: <strong>@MyOrder.StatusText</strong>
+                </p>
+            </div>
+            <div class="track-order-body">
+                detaill
+            </div>
+        </div>
+    }
+</div>
