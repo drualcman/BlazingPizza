@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazingPizza.Client.Pages
 {
-    public partial class OrderDetails
+    public partial class OrderDetails: IDisposable
     {
         [Parameter]
         public int OrderId { get; set; }
@@ -60,5 +60,9 @@ namespace BlazingPizza.Client.Pages
             PollForUpdates();
         }
 
+        public void Dispose()
+        {
+            PollingCancellationToken?.Cancel();
+        }
     }
 }

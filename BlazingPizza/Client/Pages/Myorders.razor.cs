@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlazingPizza.Client.Pages
 {
-    public partial class Myorders
+    public partial class Myorders: IDisposable
     {
         [Inject]
         public HttpClient Client { get; set; }
@@ -28,8 +28,11 @@ namespace BlazingPizza.Client.Pages
                 try
                 {
                     MyOrdersWithStatus = await Client.GetFromJsonAsync<List<OrderWithStatus>>("orders");
-                    StateHasChanged();
-                    await Task.Delay(5000);                    
+                    StateHasChanged();                    
+                    int ordersDeliveres = MyOrdersWithStatus.Where(o => o.IsDelivered == true).ToList().Count();
+                    int totalOrders = MyOrdersWithStatus.Count();
+                    if (ordersDeliveres == totalOrders) PollingCancellationToken.Cancel();
+                    else await Task.Delay(5000);                    
                 }
                 catch (Exception ex)
                 {
@@ -45,6 +48,11 @@ namespace BlazingPizza.Client.Pages
         {
             PollingCancellationToken?.Cancel();     //if already enter some times and it's looking then cancel to check the new order
             PollForUpdates();
+        }
+
+        public void Dispose()
+        {
+            PollingCancellationToken?.Cancel();
         }
     }
 }

@@ -22,9 +22,9 @@ namespace BlazingPizza.Client
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             //force to use the culture from the country about the app.
-            CultureInfo.CurrentCulture = new CultureInfo("en-AU");
-            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-AU");
-            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-AU");
+            //CultureInfo.CurrentCulture = new CultureInfo("en-AU");
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("es-MX");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("es-MX");
 
 
             await builder.Build().RunAsync();
