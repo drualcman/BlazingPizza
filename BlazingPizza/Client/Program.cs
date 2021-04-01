@@ -23,6 +23,8 @@ namespace BlazingPizza.Client
 
             //force to use the culture from the country about the app.
             CultureInfo.CurrentCulture = new CultureInfo("en-AU");
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-AU");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-AU");
 
 
             await builder.Build().RunAsync();
