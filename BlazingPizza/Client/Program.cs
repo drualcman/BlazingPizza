@@ -1,3 +1,4 @@
+using BlazingPizza.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,9 +24,11 @@ namespace BlazingPizza.Client
 
             //force to use the culture from the country about the app.
             //CultureInfo.CurrentCulture = new CultureInfo("en-AU");
-            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("es-MX");
-            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("es-MX");
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-AU");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-AU");
 
+            //Add AppState Service
+            builder.Services.AddScoped<OrderState>();
 
             await builder.Build().RunAsync();
         }

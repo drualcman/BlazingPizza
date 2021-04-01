@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BlazingPizza.Shared;
 using System.Net.Http;
 using System.Net.Http.Json;
+using BlazingPizza.Client.Services;
 
 namespace BlazingPizza.Client.Pages
 {
@@ -17,52 +18,21 @@ namespace BlazingPizza.Client.Pages
         [Inject]
         public NavigationManager Navigation { get; set; }
 
-        List<PizzaSpecial> Specials;
-        bool ShowingConfigureDialog;
-        Pizza ConfiguringPizza;
-        Order MyOrder;
+        [Inject]
+        public OrderState MyOrderState { get; set; }
+
+        List<PizzaSpecial> Specials;        
 
         protected override async Task OnInitializedAsync()
         {
-            MyOrder = new Order();          //for performance can be here
             Specials = await Client.GetFromJsonAsync<List<PizzaSpecial>>("specials");
         }
-
-        void ShowConfigurePizzaDialog(PizzaSpecial special)
-        {
-            ConfiguringPizza = new Pizza()
-            {
-                Special = special,
-                SpecialId = special.Id,
-                Size = Pizza.DefaultSize,
-                Toppings = new List<PizzaTopping>()
-            };
-            ShowingConfigureDialog = true;
-        }
-
-        void OnCancel_Click()
-        {
-            ConfiguringPizza = null;
-            ShowingConfigureDialog = false;
-        }
-
-        void OnConfirm_Click()
-        {
-            MyOrder.Pizzas.Add(ConfiguringPizza);
-            ConfiguringPizza = null;
-            ShowingConfigureDialog = false;
-        }
-
-        void OnRemoved_Click(Pizza pizza)
-        {
-            MyOrder.Pizzas.Remove(pizza);
-        }
-
+        
         async Task PlaceOrder()
         {
-            HttpResponseMessage response = await Client.PostAsJsonAsync("orders", MyOrder);
+            HttpResponseMessage response = await Client.PostAsJsonAsync("orders", MyOrderState.MyOrder);
             int newOrderId = await response.Content.ReadFromJsonAsync<int>();
-            MyOrder = new Order();
+            MyOrderState.ResetOrder();
             Navigation.NavigateTo($"/myorders/{newOrderId}");
         }
     }
