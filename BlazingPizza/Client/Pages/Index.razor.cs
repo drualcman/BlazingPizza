@@ -14,6 +14,9 @@ namespace BlazingPizza.Client.Pages
         [Inject]
         public HttpClient Client { get; set; }
 
+        [Inject]
+        public NavigationManager Navigation { get; set; }
+
         List<PizzaSpecial> Specials;
         bool ShowingConfigureDialog;
         Pizza ConfiguringPizza;
@@ -57,8 +60,10 @@ namespace BlazingPizza.Client.Pages
 
         async Task PlaceOrder()
         {
-            await Client.PostAsJsonAsync("orders", MyOrder);
+            HttpResponseMessage response = await Client.PostAsJsonAsync("orders", MyOrder);
+            int newOrderId = await response.Content.ReadFromJsonAsync<int>();
             MyOrder = new Order();
+            Navigation.NavigateTo($"/myorders/{newOrderId}");
         }
     }
 }
