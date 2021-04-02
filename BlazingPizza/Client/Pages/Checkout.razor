@@ -1,0 +1,14 @@
+﻿@page "/checkout"
+
+
+    <div class="main">
+        <div class="checkout-cols">
+            <div>
+                <h4>Check your order</h4>
+                <OrderReview MyOrder="MyOrderState.MyOrder" />
+            </div>
+        </div>
+        <button class="checkout-button btn btn-warning" @onclick="PlaceOrder" type="button">
+            Place order
+        </button>
+    </div>
