@@ -2,13 +2,20 @@
 
 
     <div class="main">
-        <div class="checkout-cols">
-            <div>
-                <h4>Check your order</h4>
-                <OrderReview MyOrder="MyOrderState.MyOrder" />
+        <EditForm Model="MyOrderState.MyOrder.DeliveryAddress" OnValidSubmit="PlaceOrder" >
+            <div class="checkout-cols">
+                <div>
+                    <h4>Check your order</h4>
+                    <OrderReview MyOrder="MyOrderState.MyOrder" />
+                </div>
+                <div>
+                    <h4>Sent to...</h4>
+                    <AddressEditor MyAddress="MyOrderState.MyOrder.DeliveryAddress" />
+                </div>
             </div>
-        </div>
-        <button class="checkout-button btn btn-warning" @onclick="PlaceOrder" type="button">
-            Place order
-        </button>
+            <button class="checkout-button btn btn-warning" >
+                Place order
+            </button>
+            <DataAnnotationsValidator/>
+        </EditForm>
     </div>
