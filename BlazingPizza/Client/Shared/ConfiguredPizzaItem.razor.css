@@ -22,9 +22,16 @@
         font-size: 0.8rem;
     }
 
+    .cart-item .edit-item {
+        bottom: 0;
+    }
     .cart-item .delete-item {
-        position: absolute;
         top: 0;
+    }
+
+    .cart-item .delete-item,
+    .cart-item .edit-item {
+        position: absolute;
         right: 0;
         content: 'X';
         cursor: pointer;
@@ -34,7 +41,8 @@
         text-align: center;
     }
 
-        .cart-item .delete-item:hover {
+        .cart-item .delete-item:hover
+        .cart-item .edit-item:hover {
             text-decoration: none;
             color: #fff2cc;
             background-color: rgba(255,255,255,0.1);

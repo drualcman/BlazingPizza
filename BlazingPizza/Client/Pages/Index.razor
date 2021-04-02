@@ -32,7 +32,10 @@
             <h2>Your Order</h2>
             @foreach (Pizza pizza in MyOrderState.MyOrder.Pizzas)
             {
-                <ConfiguredPizzaItem MyPizza="pizza" OnRemoved="() => MyOrderState.RemovePizza(pizza)" />
+                Pizza old = pizza;
+                <ConfiguredPizzaItem MyPizza="pizza" 
+                                     OnEdit="() => MyOrderState.UpdatePizza(old, pizza)"
+                                     OnRemoved="() => MyOrderState.RemovePizza(pizza)" />
             }
         </div>
     }
@@ -54,5 +57,5 @@
 {
     <ConfigurePizzaDialog MyPizza="MyOrderState.ConfiguringPizza" 
                           OnCancel="MyOrderState.Cancel" 
-                          OnConfirm="MyOrderState.Confirm" />
+                          OnConfirm="MyOrderState.Confirm"/>
 }

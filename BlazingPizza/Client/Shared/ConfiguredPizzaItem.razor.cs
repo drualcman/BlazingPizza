@@ -14,5 +14,22 @@ namespace BlazingPizza.Client.Shared
 
         [Parameter]
         public EventCallback OnRemoved { get; set; }
+
+        [Parameter]
+        public EventCallback OnEdit { get; set; }
+
+        bool ShowingConfigureDialog = false;
+
+        void Edit()
+        {
+            ShowingConfigureDialog = true;
+            OnEdit.InvokeAsync();
+        }
+
+        void Confirm()
+        {
+            ShowingConfigureDialog = false;
+        }
+
     }
 }

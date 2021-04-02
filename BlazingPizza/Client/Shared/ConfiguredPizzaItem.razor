@@ -1,5 +1,6 @@
 ﻿<div class="cart-item">
     <span type="button" @onclick="OnRemoved" class="delete-item">X</span>
+    <span type="button" @onclick="Edit" class="edit-item">M</span>
     <div class="title">@MyPizza.Size cm @MyPizza.Special.Name</div>
     <ul>
         @foreach (PizzaTopping topping in MyPizza.Toppings)
@@ -11,3 +12,11 @@
         @MyPizza.GetFormattedTotalPrice()
     </div>
 </div>
+
+
+@if (ShowingConfigureDialog)
+{
+    <ConfigurePizzaDialog MyPizza="MyPizza"
+                          OnCancel="Confirm"
+                          OnConfirm="Confirm" />
+}
