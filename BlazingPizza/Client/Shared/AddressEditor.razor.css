@@ -1,18 +1,3 @@
-﻿.form-field {
-    display: flex;
-    margin: 0.5rem;
-}
-
-    .form-field > label {
-        width: 8rem;
-    }
-
-    .form-field > div {
-        flex-grow: 1;
-    }
-
-    .form-field input {
-        width: 100%;
-    }
+﻿
 
 

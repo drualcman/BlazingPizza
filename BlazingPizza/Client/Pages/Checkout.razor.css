@@ -29,3 +29,23 @@
     border-radius: 20px;
     padding: 0.4rem 1.2rem;
 }
+    .checkout-button.disable {
+        cursor: progress;
+    }
+
+.form-field {
+    display: flex;
+    margin: 0.5rem;
+}
+
+    .form-field > label {
+        width: 8rem;
+    }
+
+    .form-field > div {
+        flex-grow: 1;
+    }
+
+    .form-field input {
+        width: 100%;
+    }

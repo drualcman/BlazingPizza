@@ -13,7 +13,7 @@
                     <AddressEditor MyAddress="MyOrderState.MyOrder.DeliveryAddress" />
                 </div>
             </div>
-            <button class="checkout-button btn btn-warning" >
+            <button class="checkout-button btn btn-warning @(Clicked ? "disable":"")"  >
                 Place order
             </button>
             <DataAnnotationsValidator/>
