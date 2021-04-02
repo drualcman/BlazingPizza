@@ -37,6 +37,12 @@ namespace BlazingPizza.Client.Services
             ShowingConfigureDialog = false;
         }
 
+        public void UpdatePizza(Pizza old, Pizza nueva)
+        {
+            MyOrder.Pizzas.Remove(old);
+            MyOrder.Pizzas.Add(nueva);
+        }
+
         public void RemovePizza(Pizza pizza)
         {
             MyOrder.Pizzas.Remove(pizza);
