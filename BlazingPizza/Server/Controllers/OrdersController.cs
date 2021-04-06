@@ -25,7 +25,8 @@ namespace BlazingPizza.Server.Controllers
         public async Task<ActionResult<int>> PlaceOrder(Order order)
         {
             order.CreatedTime = DateTime.Now;
-            order.DeliveryLocation = new LatLong(15.192927128168584, 120.58669395190812);       //my house now
+            //order.DeliveryLocation = new LatLong(15.192927128168584, 120.58669395190812);       //my house now
+            order.DeliveryLocation = new LatLong(15.192962600000001, 120.5866973);       //my house now from GPS
 
             foreach (Pizza pizza in order.Pizzas)
             {
