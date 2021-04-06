@@ -21,7 +21,7 @@ namespace BlazingPizza.Server.Controllers
         }
 
         /// <summary>
-        /// Send all the configuration paramenter to the client to get dynamic
+        /// Send all the configuration parameter to the client to get dynamic
         /// </summary>
         /// <param name="clientId"></param>
         /// <returns></returns>
