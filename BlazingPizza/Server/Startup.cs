@@ -1,4 +1,5 @@
 using BlazingPizza.Server.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,20 @@ namespace BlazingPizza.Server
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDatabaseDeveloperPageExceptionFilter();     //for can see entityframework errors
+            //identityserver4 setup
+            services.AddDefaultIdentity<PizzaStoreUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true
+            ).AddEntityFrameworkStores<PizzaStoreContext>();
+            services.AddIdentityServer()
+                .AddApiAuthorization<
+                    PizzaStoreUser,             //add user setup
+                    PizzaStoreContext           //add database management
+                >();
+            services.AddAuthentication()
+                .AddIdentityServerJwt();        //setup authentication scheme for /identity
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +53,7 @@ namespace BlazingPizza.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();            //notification if we need to add migrations
                 app.UseWebAssemblyDebugging();
             }
             else
@@ -52,6 +68,11 @@ namespace BlazingPizza.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //add identity server
+            app.UseIdentityServer();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

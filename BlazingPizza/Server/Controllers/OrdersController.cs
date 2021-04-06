@@ -1,5 +1,6 @@
 ﻿using BlazingPizza.Server.Models;
 using BlazingPizza.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace BlazingPizza.Server.Controllers
 {
     [Route("orders")]
     [ApiController]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly PizzaStoreContext Context;
@@ -25,7 +27,8 @@ namespace BlazingPizza.Server.Controllers
         public async Task<ActionResult<int>> PlaceOrder(Order order)
         {
             order.CreatedTime = DateTime.Now;
-            order.DeliveryLocation = new LatLong(15.192927128168584, 120.58669395190812);       //my house now
+            //order.DeliveryLocation = new LatLong(15.192927128168584, 120.58669395190812);       //my house now
+            order.DeliveryLocation = new LatLong(15.192962600000001, 120.5866973);       //my house now from GPS
 
             foreach (Pizza pizza in order.Pizzas)
             {
