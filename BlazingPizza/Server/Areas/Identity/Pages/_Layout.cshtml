@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@using BlazingPizza.Client.Shared
+@inject IWebHostEnvironment Enviroment
+@inject ICompositeViewEngine Engine
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>@ViewBag.Title | Blazing Pizza</title>
+    <link rel="icon" href="~/images/icon-512.png" />
+    <link href="~/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/loading.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/error.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/css/app.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/css/topbar.css" rel="stylesheet" asp-append-version="true"/>
+</head>
+<body>
+    <div class="top-bar">
+        <a class="logo" href="/">
+            <img src="~/images/logo.svg" alt="logo"/>
+        </a>
+        <a href="/" class="nav-tab" Match="NavLinkMatch.All">
+            <img src="~/images/pizza-slice.svg" alt="Home" />
+            <div>Pizzas</div>
+        </a>
+        <partial name="_LoginPartial"/>
+    </div>
+    <div class="content">
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/Identity/lib/bootstrap/dist/bootstrap.bundle.min.js"></script>
+    <script src="~/Identity/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
