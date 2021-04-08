@@ -1,0 +1,20 @@
+﻿<div class="user-info">
+    <AuthorizeView>
+        <Authorizing>
+            <div class="loading-bar"></div>
+        </Authorizing>
+        <Authorized>
+            <img src="images/user.svg" alt="user"/>
+            <div>
+                <a href="authentication/profile" class="username">
+                    @context.User.Identity.Name
+                </a>
+                <button class="btn btn-link sign-out" type="button" @onclick="BeginSignOut">Sign out</button>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a href="authentication/register" class="btn btn-link sign-in" >Register</a>
+            <a href="authentication/login" class="btn btn-link sign-in" >Sign in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
