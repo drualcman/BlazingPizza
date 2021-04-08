@@ -71,7 +71,7 @@ namespace BlazingPizza.Server
 
             //add identity server
             app.UseIdentityServer();
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
