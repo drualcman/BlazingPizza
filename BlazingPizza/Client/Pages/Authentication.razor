@@ -1,3 +1,32 @@
 ﻿@page "/authentication/{action}"
 
-<RemoteAuthenticatorView Action="@action" />
+<div class="main">
+    <RemoteAuthenticatorView Action="@action">
+        <LoggingIn>
+            <p>
+                Checking session state
+            </p>
+            <div class="loading-bar"></div>
+        </LoggingIn>
+        <CompletingLoggingIn>
+            <div class="loading-bar"></div>
+        </CompletingLoggingIn>        
+        <LogOut>
+            <p>
+                Checking session state
+            </p>
+            <div class="loading-bar"></div>
+        </LogOut>
+        <CompletingLogOut>
+            <p>
+                Processing log out
+            </p>
+            <div class="loading-bar"></div>
+        </CompletingLogOut>
+        <LogOutSucceeded>
+            <p>
+                Thanks for visit us. Come again.
+            </p>
+        </LogOutSucceeded>
+    </RemoteAuthenticatorView>
+</div>
