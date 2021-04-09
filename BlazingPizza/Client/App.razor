@@ -3,10 +3,7 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    <div class="main">
-                        <p>Authorization required.</p>
-                        <a href="authentication/login" class="btn btn-link sign-in">Log in here</a>
-                    </div>
+                    <RedirectToLogin />
                 </NotAuthorized>
                 <Authorizing>
                     <div class="main">
