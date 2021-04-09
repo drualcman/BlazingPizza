@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BlazingPizza.Server.Controllers
@@ -29,7 +30,7 @@ namespace BlazingPizza.Server.Controllers
             order.CreatedTime = DateTime.Now;
             //order.DeliveryLocation = new LatLong(15.192927128168584, 120.58669395190812);       //my house now
             order.DeliveryLocation = new LatLong(15.192962600000001, 120.5866973);       //my house now from GPS
-
+            order.UserId = GetUserId();
             foreach (Pizza pizza in order.Pizzas)
             {
                 pizza.SpecialId = pizza.Special.Id;
@@ -53,7 +54,8 @@ namespace BlazingPizza.Server.Controllers
                 .Include(o => o.DeliveryLocation)
                 .Include(o=> o.Pizzas).ThenInclude(p=>p.Special)
                 .Include(o=> o.Pizzas).ThenInclude(p=> p.Toppings)
-                                       .ThenInclude(t=> t.Topping)                
+                                       .ThenInclude(t=> t.Topping)     
+                .Where(u=>u.UserId == GetUserId())
                 .OrderByDescending(o => o.CreatedTime)
                 .ToListAsync();
             return orders.Select(o => OrderWithStatus.FromOrder(o)).ToList();
@@ -64,7 +66,7 @@ namespace BlazingPizza.Server.Controllers
         {
             IActionResult result;
 
-            Order order = await Context.Orders.Where(o => o.OrderId == orderId)
+            Order order = await Context.Orders.Where(o => o.OrderId == orderId && o.UserId == GetUserId())
                 .Include(o => o.DeliveryLocation)
                 .Include(o => o.Pizzas).ThenInclude(p => p.Special)
                 .Include(o => o.Pizzas).ThenInclude(p => p.Toppings)
@@ -75,6 +77,11 @@ namespace BlazingPizza.Server.Controllers
             else result = Ok(OrderWithStatus.FromOrder(order));
 
             return result;
+        }
+
+        private string GetUserId()
+        {
+            return HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

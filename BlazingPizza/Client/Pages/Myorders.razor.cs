@@ -1,5 +1,7 @@
-﻿using BlazingPizza.Shared;
+﻿using BlazingPizza.Client.Services;
+using BlazingPizza.Shared;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace BlazingPizza.Client.Pages
     public partial class Myorders: IDisposable
     {
         [Inject]
-        public HttpClient Client { get; set; }
+        public OrdersClient Client { get; set; }
 
         List<OrderWithStatus> MyOrdersWithStatus;
 
@@ -27,12 +29,17 @@ namespace BlazingPizza.Client.Pages
             {
                 try
                 {
-                    MyOrdersWithStatus = await Client.GetFromJsonAsync<List<OrderWithStatus>>("orders");
+                    MyOrdersWithStatus = await Client.GetOrders();
                     StateHasChanged();                    
                     int ordersDeliveres = MyOrdersWithStatus.Where(o => o.IsDelivered == true).ToList().Count();
                     int totalOrders = MyOrdersWithStatus.Count();
                     if (ordersDeliveres == totalOrders) PollingCancellationToken.Cancel();
                     else await Task.Delay(5000);                    
+                }
+                catch (AccessTokenNotAvailableException ex)
+                {
+                    PollingCancellationToken.Cancel();
+                    ex.Redirect();
                 }
                 catch (Exception ex)
                 {

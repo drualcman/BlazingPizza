@@ -1,5 +1,6 @@
 ﻿using BlazingPizza.Client.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace BlazingPizza.Client.Pages
         public NavigationManager Navigation { get; set; }
 
         [Inject]
-        public HttpClient Client { get; set; }
+        public OrdersClient Client { get; set; }
 
         bool Clicked = false;
 
@@ -27,10 +28,16 @@ namespace BlazingPizza.Client.Pages
             if (!Clicked)
             {
                 Clicked = true;
-                HttpResponseMessage response = await Client.PostAsJsonAsync("orders", MyOrderState.MyOrder);
-                int newOrderId = await response.Content.ReadFromJsonAsync<int>();
-                MyOrderState.ResetOrder();
-                Navigation.NavigateTo($"/myorders/{newOrderId}");
+                try
+                {
+                    int newOrderId = await Client.PlaceOrder(MyOrderState.MyOrder);
+                    MyOrderState.ResetOrder();
+                    Navigation.NavigateTo($"/myorders/{newOrderId}");
+                }
+                catch (AccessTokenNotAvailableException ex)
+                {
+                    ex.Redirect();
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
 using BlazingPizza.Client.Services;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,10 @@ namespace BlazingPizza.Client
             //Add AppState Service
             builder.Services.AddScoped<OrderState>();
             builder.Services.AddApiAuthorization();
+            builder.Services.AddHttpClient<OrdersClient>(
+                httpClient =>httpClient.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()
+                ;
 
             await builder.Build().RunAsync();
         }
