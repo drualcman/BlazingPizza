@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlazingPizza.ComponentsLibrary.Map
+namespace BlazingPizza.ComponentsLibrary.Maps
 {
     public class Marker
     {
