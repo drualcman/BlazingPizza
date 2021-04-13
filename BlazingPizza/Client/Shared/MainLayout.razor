@@ -8,10 +8,12 @@
         <img src="images/pizza-slice.svg" alt="Home" />
         <div>Pizzas</div>
     </NavLink>
-    <NavLink href="myorders" class="nav-tab" Match="NavLinkMatch.All">
-        <img src="images/bike.svg" alt="Orders" />
-        <div>My Orders</div>
-    </NavLink>
+    <AuthorizeView>
+        <NavLink href="myorders" class="nav-tab" Match="NavLinkMatch.All">
+            <img src="images/bike.svg" alt="Orders" />
+            <div>My Orders</div>
+        </NavLink>        
+    </AuthorizeView>
     <LoginDisplay/>
 </div>
 

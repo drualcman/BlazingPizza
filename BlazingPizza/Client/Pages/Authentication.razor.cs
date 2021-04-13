@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazingPizza.Client.Services;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,24 @@ namespace BlazingPizza.Client.Pages
         [Parameter]
         public string action { get; set; }
 
+        [Inject]
+        public OrderState MyOrderState { get; set; }
+
+        public PizzaAuthenticationState RemoteAuthenticationState { get; set; } = new PizzaAuthenticationState();
+
+        protected override void OnInitialized()
+        {
+            if (RemoteAuthenticationActions.IsAction(RemoteAuthenticationActions.LogIn, action))
+            {
+                RemoteAuthenticationState.MyOrder = MyOrderState.MyOrder;
+            }
+        }
+
+        void RestorePizza(PizzaAuthenticationState pizzaAuthenticationState)
+        {
+            if (pizzaAuthenticationState.MyOrder is not null)
+                MyOrderState.ReplaceOrder(pizzaAuthenticationState.MyOrder);
+        }
 
     }
 }

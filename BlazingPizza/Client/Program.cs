@@ -30,7 +30,8 @@ namespace BlazingPizza.Client
 
             //Add AppState Service
             builder.Services.AddScoped<OrderState>();
-            builder.Services.AddApiAuthorization();
+            builder.Services.AddApiAuthorization<PizzaAuthenticationState>();
+
             builder.Services.AddHttpClient<OrdersClient>(
                 httpClient =>httpClient.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>()

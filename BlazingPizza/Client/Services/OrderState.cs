@@ -52,5 +52,11 @@ namespace BlazingPizza.Client.Services
         {
             MyOrder = new Order();
         }
+
+        /// <summary>
+        /// Recovery the order from PizzaAuthenticatinState from the persist the order
+        /// </summary>
+        /// <param name="order"></param>
+        public void ReplaceOrder(Order order) => MyOrder = order;
     }
 }

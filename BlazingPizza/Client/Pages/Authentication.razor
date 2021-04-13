@@ -1,7 +1,11 @@
 ﻿@page "/authentication/{action}"
 
 <div class="main">
-    <RemoteAuthenticatorView Action="@action">
+    
+    <RemoteAuthenticatorViewCore TAuthenticationState="PizzaAuthenticationState"
+                                 AuthenticationState="RemoteAuthenticationState"
+                                 OnLogInSucceeded="RestorePizza"
+                                 Action="@action">
         <LoggingIn>
             <p>
                 Checking session state
@@ -10,7 +14,7 @@
         </LoggingIn>
         <CompletingLoggingIn>
             <div class="loading-bar"></div>
-        </CompletingLoggingIn>        
+        </CompletingLoggingIn>
         <LogOut>
             <p>
                 Checking session state
@@ -28,5 +32,5 @@
                 Thanks for visit us. Come again.
             </p>
         </LogOutSucceeded>
-    </RemoteAuthenticatorView>
+    </RemoteAuthenticatorViewCore>
 </div>
