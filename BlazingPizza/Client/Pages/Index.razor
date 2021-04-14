@@ -53,9 +53,9 @@
     </div>
 </div>
 
-@if (MyOrderState.ShowingConfigureDialog)
-{
-    <ConfigurePizzaDialog MyPizza="MyOrderState.ConfiguringPizza" 
-                          OnCancel="MyOrderState.Cancel" 
-                          OnConfirm="MyOrderState.Confirm"/>
-}
+
+<TemplateDialog Show="MyOrderState.ShowingConfigureDialog">
+    <ConfigurePizzaDialog MyPizza="MyOrderState.ConfiguringPizza"
+                            OnCancel="MyOrderState.Cancel"
+                            OnConfirm="MyOrderState.Confirm" />
+</TemplateDialog>

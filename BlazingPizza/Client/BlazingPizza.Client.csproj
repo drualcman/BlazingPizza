@@ -17,11 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BlazingPizza.TemplateComponents\BlazingPizza.TemplateComponents.csproj" />
     <ProjectReference Include="..\Shared\BlazingPizza.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\images\Pizzas\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\ConfigurePizzaDialog.css" />
   </ItemGroup>
   
   <PropertyGroup>
