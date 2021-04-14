@@ -35,7 +35,7 @@
                 Pizza old = pizza;
                 <ConfiguredPizzaItem MyPizza="pizza" 
                                      OnEdit="() => MyOrderState.UpdatePizza(old, pizza)"
-                                     OnRemoved="() => MyOrderState.RemovePizza(pizza)" />
+                                     OnRemoved="() => RemovePizza(pizza)" />
             }
         </div>
     }
