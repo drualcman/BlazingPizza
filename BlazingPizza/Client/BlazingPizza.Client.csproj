@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\css\ConfigurePizzaDialog.css" />
+    <None Include="wwwroot\css\Orders.css" />
   </ItemGroup>
   
   <PropertyGroup>

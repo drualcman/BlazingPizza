@@ -2,39 +2,28 @@
 @attribute [Authorize]
 
 <div class="main">
-    @if (MyOrdersWithStatus is null)
-    {
-        <div class="loading-bar"></div>
-    }
-    else if (MyOrdersWithStatus.Count < 1)
-    {
-        <h2>No orders yet!</h2>
-        <a href="" class="btn btn-success">Get a pizza!</a>
-    }
-    else
-    {
-        <div class="list-group orders-list">
-            @foreach (OrderWithStatus Item in MyOrdersWithStatus)
-            {
-                <div class="list-group-item">
-                    <div class="col">
-                        <h5>@Item.MyOrder.CreatedTime.ToLongDateString()</h5>
-                        Pizzas:
-                        <strong>@Item.MyOrder.Pizzas.Count()</strong>
-                        Total price:
-                        <strong>$@Item.MyOrder.GetFormattedTotalPrice()</strong>
-                    </div>
-                    <div class="col">
-                        Status: <strong>@Item.StatusText</strong>
-                    </div>
-                    <div class="col text-right">
-                        <a href="myorders/@Item.MyOrder.OrderId" class="btn btn-success">
-                            Track &gt;
-                        </a>
-                    </div>
-                </div>
-            }
-        </div>
-
-    }
+    <TemplateList Loader="LoadOrders" ListGroupClass="orders-list">
+        @*<Loading><div class="loading-bar"></div></Loading>
+        <Empty>
+            <h2>No orders yet!</h2>
+            <a href="" class="btn btn-success">Get a pizza!</a>
+        </Empty>*@
+        <Item Context="Item">
+            <div class="col">
+                <h5>@Item.MyOrder.CreatedTime.ToLongDateString()</h5>
+                Pizzas:
+                <strong>@Item.MyOrder.Pizzas.Count()</strong>
+                Total price:
+                <strong>$@Item.MyOrder.GetFormattedTotalPrice()</strong>
+            </div>
+            <div class="col">
+                Status: <strong>@Item.StatusText</strong>
+            </div>
+            <div class="col text-right">
+                <a href="myorders/@Item.MyOrder.OrderId" class="btn btn-success">
+                    Track &gt;
+                </a>
+            </div>
+        </Item>
+    </TemplateList>
 </div>
