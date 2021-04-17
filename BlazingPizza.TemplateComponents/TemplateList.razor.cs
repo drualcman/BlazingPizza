@@ -32,10 +32,14 @@ namespace BlazingPizza.TemplateComponents
         {
             if (Loading is null)
             {
+                
                 Loading = builder =>
                 {
                     builder.OpenElement(0, "div");
                     builder.AddAttribute(0, "class", "loading-bar");
+                    builder.CloseElement();
+                    builder.OpenElement(1, "p");
+                    builder.AddContent(1, "...");
                     builder.CloseElement();
                 };
             }
@@ -44,13 +48,15 @@ namespace BlazingPizza.TemplateComponents
                 Empty = builder =>
                 {
                     builder.OpenElement(0, "h2");
-                    builder.AddContent(0, "No orders yet!");
+                    builder.AddContent(0, "Nothing here yet!");
                     builder.CloseElement();
                     builder.OpenElement(1, "a");
-                    builder.AddContent(1, "Get a pizza!");
                     builder.AddAttribute(1, "href", "\\");
+                    builder.AddContent(1, "< Back");
                     builder.CloseElement();
                 };
+
+                
             }
 
         }

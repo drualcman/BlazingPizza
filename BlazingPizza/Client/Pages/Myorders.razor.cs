@@ -19,16 +19,15 @@ namespace BlazingPizza.Client.Pages
 
         private async Task<List<OrderWithStatus>> LoadOrders()
         {
-            await Task.Delay(30);
             List<OrderWithStatus> MyOrdersWithStatus = new List<OrderWithStatus>();
-            //try
-            //{
-            //    MyOrdersWithStatus = await Client.GetOrders();
-            //}
-            //catch (AccessTokenNotAvailableException ex)
-            //{
-            //    ex.Redirect();
-            //}
+            try
+            {
+                MyOrdersWithStatus = await Client.GetOrders();
+            }
+            catch (AccessTokenNotAvailableException ex)
+            {
+                ex.Redirect();
+            }
             return MyOrdersWithStatus;
         }
 
