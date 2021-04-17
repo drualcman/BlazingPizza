@@ -33,31 +33,41 @@ namespace BlazingPizza.TemplateComponents
         {
             Items = await Loader();
 
-            RenderTreeBuilder treeBuilder = new RenderTreeBuilder();            
+            RenderFragment treeBuilder;
+
+            treeBuilder = builder =>
+            {
+                builder.OpenElement(0, "loader");
+                builder.AddContent(0, "<div class=\"loading-bar\"></div>");
+                builder.CloseElement();
+            };
+
+            //RenderTreeBuilder treeBuilder = new RenderTreeBuilder();            
             if (Loading is null)
             {
-                treeBuilder.Clear();
-                treeBuilder.AddMarkupContent(0, "<div class=\"loading-bar\"></div>");
-                Loading = builder => 
+                //Loading = treeBuilder;
+                //treeBuilder.Clear();
+                //treeBuilder.AddMarkupContent(0, "<div class=\"loading-bar\"></div>");
+                Loading = builder =>
                 {
-                    builder.OpenComponent(0, typeof(TItem));
-                    builder.AddMarkupContent(0, "<div class=\"loading-bar\"></div>");
-                    builder.CloseComponent();
+                    builder.OpenElement(0, "loader");
+                    builder.AddContent(0, "<div class=\"loading-bar\"></div>");
+                    builder.CloseElement();
                 };
             }
-            if (Empty is null)
-            {
-                treeBuilder.Clear();
-                treeBuilder.AddMarkupContent(0, "<h2>No orders yet!</h2>");
-                treeBuilder.AddMarkupContent(1, "<a href=\"\" class=\"btn btn-success\">Get a pizza!</a>");
-                Empty = builder =>
-                {
-                    builder.OpenComponent(0, typeof(TItem));
-                    builder.AddMarkupContent(0, "<h2>No orders yet!</h2>");
-                    builder.AddMarkupContent(1, "<a href=\"\" class=\"btn btn-success\">Get a pizza!</a>");
-                    builder.CloseComponent();
-                };
-            }
+            //if (Empty is null)
+            //{
+            //    treeBuilder.Clear();
+            //    treeBuilder.AddMarkupContent(0, "<h2>No orders yet!</h2>");
+            //    treeBuilder.AddMarkupContent(1, "<a href=\"\" class=\"btn btn-success\">Get a pizza!</a>");
+            //    Empty = builder =>
+            //    {
+            //        builder.OpenComponent(0, typeof(TItem));
+            //        builder.AddMarkupContent(0, "<h2>No orders yet!</h2>");
+            //        builder.AddMarkupContent(1, "<a href=\"\" class=\"btn btn-success\">Get a pizza!</a>");
+            //        builder.CloseComponent();
+            //    };
+            //}
 
         }
     }
