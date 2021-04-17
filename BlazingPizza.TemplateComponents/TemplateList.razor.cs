@@ -38,8 +38,8 @@ namespace BlazingPizza.TemplateComponents
                     builder.OpenElement(0, "div");
                     builder.AddAttribute(0, "class", "loading-bar");
                     builder.CloseElement();
-                    builder.OpenElement(1, "p");
-                    builder.AddContent(1, "...");
+                    builder.OpenElement(1, "h2");
+                    builder.AddContent(1, "Loading...");
                     builder.CloseElement();
                 };
             }
