@@ -19,7 +19,7 @@ namespace BlazingPizza.Client.Pages
 
         private async Task<List<OrderWithStatus>> LoadOrders()
         {
-            await Task.Delay(10);
+            await Task.Delay(30);
             List<OrderWithStatus> MyOrdersWithStatus = new List<OrderWithStatus>();
             //try
             //{

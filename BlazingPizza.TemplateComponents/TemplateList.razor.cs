@@ -28,47 +28,36 @@ namespace BlazingPizza.TemplateComponents
 
         List<TItem> Items;
 
-
-        protected override async Task OnParametersSetAsync()
+        protected override void OnParametersSet()
         {
-            Items = await Loader();
-
-            RenderFragment treeBuilder;
-
-            treeBuilder = builder =>
-            {
-                builder.OpenElement(0, "loader");
-                builder.AddContent(0, "<div class=\"loading-bar\"></div>");
-                builder.CloseElement();
-            };
-
-            //RenderTreeBuilder treeBuilder = new RenderTreeBuilder();            
             if (Loading is null)
             {
-                //Loading = treeBuilder;
-                //treeBuilder.Clear();
-                //treeBuilder.AddMarkupContent(0, "<div class=\"loading-bar\"></div>");
                 Loading = builder =>
                 {
-                    builder.OpenElement(0, "loader");
-                    builder.AddContent(0, "<div class=\"loading-bar\"></div>");
+                    builder.OpenElement(0, "div");
+                    builder.AddAttribute(0, "class", "loading-bar");
                     builder.CloseElement();
                 };
             }
-            //if (Empty is null)
-            //{
-            //    treeBuilder.Clear();
-            //    treeBuilder.AddMarkupContent(0, "<h2>No orders yet!</h2>");
-            //    treeBuilder.AddMarkupContent(1, "<a href=\"\" class=\"btn btn-success\">Get a pizza!</a>");
-            //    Empty = builder =>
-            //    {
-            //        builder.OpenComponent(0, typeof(TItem));
-            //        builder.AddMarkupContent(0, "<h2>No orders yet!</h2>");
-            //        builder.AddMarkupContent(1, "<a href=\"\" class=\"btn btn-success\">Get a pizza!</a>");
-            //        builder.CloseComponent();
-            //    };
-            //}
+            if (Empty is null)
+            {
+                Empty = builder =>
+                {
+                    builder.OpenElement(0, "h2");
+                    builder.AddContent(0, "No orders yet!");
+                    builder.CloseElement();
+                    builder.OpenElement(1, "a");
+                    builder.AddContent(1, "Get a pizza!");
+                    builder.AddAttribute(1, "href", "\\");
+                    builder.CloseElement();
+                };
+            }
 
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            Items = await Loader();           
         }
     }
 }
