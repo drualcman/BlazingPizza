@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
+using WebPush;
 
 namespace BlazingPizza.Server.Controllers
 {
@@ -44,6 +46,8 @@ namespace BlazingPizza.Server.Controllers
             }
             Context.Add(order);
             await Context.SaveChangesAsync();
+            NotificationSubscription subscription = await Context.NotificationSubscriptions.Where(e => e.UserId == GetUserId()).SingleOrDefaultAsync();
+            if (subscription is not null) _ = TranckAndSendNotificationsAsync(order, subscription);
             return order.OrderId;
         }
 
@@ -82,6 +86,40 @@ namespace BlazingPizza.Server.Controllers
         private string GetUserId()
         {
             return HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
+        private static async Task SendNotificationAsync(Order order, NotificationSubscription subscription, string message)
+        {
+            // En una aplicación real puedes generar tus propias llaves en
+            // https://tools.reactpwa.com/vapid
+            string PublicKey =  "BLC8GOevpcpjQiLkO7JmVClQjycvTCYWm6Cq_a7wJZlstGTVZvwGFFHMYfXt6Njyvgx_GlXJeo5cSiZ1y4JOx1o";
+            string PrivateKey = "OrubzSz3yWACscZXjFQrrtDwCKg-TGFuWhluQ2wLXDo";
+
+            PushSubscription PushSubscription = new PushSubscription(subscription.Url, subscription.P256dh, subscription.Auth);
+            // Aquí puedes colocar tu propio correo en someone@example.com
+            VapidDetails VapidDetails = new VapidDetails("mailto:someone@example.com", PublicKey, PrivateKey);
+            WebPushClient WebPushClient = new WebPushClient();
+            try
+            {
+                string Payload = JsonSerializer.Serialize(new
+                {
+                    message,
+                    url = $"myorders/{order.OrderId}",
+                });
+                await WebPushClient.SendNotificationAsync(PushSubscription, Payload, VapidDetails);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error al enviar la notificación push: {ex.Message}");
+            }
+        }
+
+        private static async Task TranckAndSendNotificationsAsync(Order order, NotificationSubscription subscription)
+        {
+            await Task.Delay(OrderWithStatus.PreparationDuration);
+            await SendNotificationAsync(order, subscription, "Your order is on the way!");
+            await Task.Delay(OrderWithStatus.DeliveryDuration);
+            await SendNotificationAsync(order, subscription, "Your order is delivered! Enjoy!");
         }
     }
 }
