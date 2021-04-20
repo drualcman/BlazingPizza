@@ -27,7 +27,8 @@ namespace BlazingPizza.Server
         {
             services.AddDbContext<PizzaStoreContext>(options => 
             {
-                options.UseSqlServer(Configuration.GetConnectionString("PizzaStore"));
+                //options.UseSqlServer(Configuration.GetConnectionString("PizzaStore"));
+                options.UseSqlite(Configuration.GetConnectionString("PizzaStore"));
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
