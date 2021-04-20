@@ -33,5 +33,11 @@ namespace BlazingPizza.Client.Services
             return orderId;
 
         }
+
+        public async Task SubscribeNotifications(NotificationSubscription subscription)
+        {
+            HttpResponseMessage response = await Client.PutAsJsonAsync("notifications/subscribe", subscription);
+            response.EnsureSuccessStatusCode();
+        }
     }
 }
